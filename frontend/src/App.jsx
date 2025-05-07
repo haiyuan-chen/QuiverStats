@@ -4,7 +4,9 @@ import TargetFace from "./components/TargetFace";
 
 function App() {
   // 1️⃣ Create a state variable "message", initially empty string
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [quivers, setQuivers] = useState([]);
   const [shots, setShots] = useState([]);
   const handleScore = (shot) => setShots((prev) => [...prev, shot]);
@@ -42,9 +44,9 @@ function App() {
       {/* using the export */}
       <h2>Scores</h2>
       <ul>
-        {shots.map((s, i) => (
+        {shots.map(({ x, y, score }, i) => (
           <li key={i}>
-            Arrow {i + 1}: {s}
+            Arrow {i + 1}: score {score} at ({x.toFixed(1)}, {y.toFixed(1)})
           </li>
         ))}
       </ul>
