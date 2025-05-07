@@ -30,7 +30,10 @@ export default function TargetFace({ onScore, shots }) {
     return { radius, fill: COLOURS[colorIdx] };
   });
 
-  const arm = calc.step * 0.5;
+  const arm = calc.step * 0.2;
+  const center = TOTAL_SIZE / 2;
+  const subTenRing = calc.step * 0.5;
+  const dotRadius = calc.step * 0.15;
 
   return (
     <svg
@@ -51,6 +54,23 @@ export default function TargetFace({ onScore, shots }) {
           strokeWidth={0.2}
         />
       ))}
+
+      <Ring
+        center={center}
+        radius={subTenRing}
+        fill={"none"}
+        stroke={"rgba(0, 0, 0, 0.4)"}
+        strokeWidth={0.1}
+      ></Ring>
+
+      <Ring
+        center={center}
+        radius={dotRadius}
+        fill={"rgba(0, 0, 0, 0.5)"}
+        stroke={"none"}
+        strokeWidth={0}
+      ></Ring>
+
       {shots.map((s, i) => (
         <ShotMarker key={i} x={s.x} y={s.y} arm={arm} />
       ))}

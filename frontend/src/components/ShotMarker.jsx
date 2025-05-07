@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export function ShotMarker({ x, y, arm }) {
   return (
-    <g stroke="darkred" strokeWidth={0.5}>
+    <g stroke="darkred" strokeWidth={0.3}>
       <line x1={x - arm} y1={y - arm} x2={x + arm} y2={y + arm} />
       <line x1={x - arm} y1={y + arm} x2={x + arm} y2={y - arm} />
     </g>
