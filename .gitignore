@@ -1,3 +1,84 @@
+# ─── Environment & secrets ────────────────────────────────────────────────────
+# never commit your .env files containing API keys, DB URLs, etc.
 .env
-# ignore the Python virtual environment
+.env.*.local
+.env.*.development
+.env.*.production
+.env.*.test
+
+# ─── Node / JavaScript (frontend & any Node services) ──────────────────────────
+/node_modules/
+/package-lock.json         # if you prefer yarn.lock, ignore the other
+/yarn.lock
+/pnpm-lock.yaml
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*
+/pnpm-debug.log*
+
+# Vite build output
+/dist/
+/.build/
+/.vite/
+
+# Next.js, Gatsby, etc.
+/.next/
+/out/
+/gatsby-*
+
+# ─── Python (backend / scripts) ────────────────────────────────────────────────
+# virtualenvs
 venv/
+.venv/
+env/
+.build/
+__venv__/
+
+# byte‑compiled / cache
+*.py[cod]
+__pycache__/
+*.so
+*.egg-info/
+.eggs/
+.python-version
+
+# Flask instance folder (often holds config & sqlite DB)
+instance/
+
+# ─── Logs & coverage ──────────────────────────────────────────────────────────
+/*.log
+logs/
+/npm-debug.log*
+coverage/
+*.lcov
+.cache/
+
+# ─── Editor / IDE ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── OS junk ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+.Trashes
+*.swp
+*~
+
+# ─── Build / distribution ─────────────────────────────────────────────────────
+/build/
+/dist/
+/out/
+/release/
+
+# ─── Misc ─────────────────────────────────────────────────────────────────────
+# Mac resource forks
+Icon?
+
+# local test databases
+*.sqlite3
+*.db
