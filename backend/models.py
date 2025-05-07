@@ -4,7 +4,6 @@ class Quiver(db.Model):
     __tablename__ = 'quiver'
     id         = db.Column(db.Integer, primary_key=True)
     name       = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.now())
     arrows     = db.relationship('Arrow', back_populates='quiver')
 
 
