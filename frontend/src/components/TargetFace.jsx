@@ -1,21 +1,14 @@
-// components/TargetFace.jsx
-import React, { useRef } from "react";
-import { ScoreCalculator } from "../calculator/ScoreCalculator";
-import { Ring } from "./ring";
-import { ShotMarker } from "./ShotMarker.jsx";
-
-const TOTAL_SIZE = 122,
-  RINGS = 10,
-  COLOURS = [
-    "#FFFFFF", // white  (scores 1 & 2)
-    "#28282B", // black  (3 & 4)
-    "#0004FF", // blue   (5 & 6)
-    "#FF0000", // red    (7 & 8)
-    "#FFFF00", // gold   (9 & 10)
-  ];
-const calc = new ScoreCalculator(TOTAL_SIZE, RINGS);
+import React, { useMemo, useRef } from "react";
+import { ScoreCalculator }         from "../stats/ScoreCalculator";
+import { Ring }                    from "./Ring";
+import { ShotMarker }              from "./ShotMarker";
 
 export default function TargetFace({ onScore, shots }) {
+  const COLOURS = [
+    "#FFFFFF", "#28282B", "#0004FF", "#FF0000", "#FFFF00",
+  ];
+
+  const calc   = useMemo(() => new ScoreCalculator(122, 10), []);
   const svgRef = useRef();
 
   const handleClick = (e) => {
@@ -23,53 +16,34 @@ export default function TargetFace({ onScore, shots }) {
     onScore(shot);
   };
 
-  const rings = Array.from({ length: RINGS }, (_, idx) => {
-    const score = idx + 1;
-    const radius = calc.step * (RINGS - score + 1);
+  const rings = Array.from({ length: calc.rings }, (_, idx) => {
+    const score    = idx + 1;
+    const radius   = calc.step * (calc.rings - score + 1);
     const colorIdx = Math.floor(idx / 2);
     return { radius, fill: COLOURS[colorIdx] };
   });
 
-  const arm = calc.step * 0.2;
-  const center = TOTAL_SIZE / 2;
-  const subTenRing = calc.step * 0.5;
-  const dotRadius = calc.step * 0.15;
+  const arm = calc.step * 0.5;
 
   return (
     <svg
       ref={svgRef}
       width="100%"
       height="100%"
-      viewBox={`0 0 ${TOTAL_SIZE} ${TOTAL_SIZE}`}
+      viewBox={`0 0 ${calc.totalSize} ${calc.totalSize}`}
       preserveAspectRatio="xMidYMid meet"
       onClick={handleClick}
     >
       {rings.map(({ radius, fill }, i) => (
         <Ring
           key={i}
-          center={TOTAL_SIZE / 2}
+          center={calc.totalSize / 2}
           radius={radius}
           fill={fill}
           stroke="black"
           strokeWidth={0.2}
         />
       ))}
-
-      <Ring
-        center={center}
-        radius={subTenRing}
-        fill={"none"}
-        stroke={"rgba(0, 0, 0, 0.4)"}
-        strokeWidth={0.1}
-      ></Ring>
-
-      <Ring
-        center={center}
-        radius={dotRadius}
-        fill={"rgba(0, 0, 0, 0.5)"}
-        stroke={"none"}
-        strokeWidth={0}
-      ></Ring>
 
       {shots.map((s, i) => (
         <ShotMarker key={i} x={s.x} y={s.y} arm={arm} />

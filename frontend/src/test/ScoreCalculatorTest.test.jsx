@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-env vitest/globals */
 // src/test/ScoreCalculator.test.jsx
-import { ScoreCalculator } from "../calculator/ScoreCalculator";
+import { ScoreCalculator } from "../stats/ScoreCalculator";
 
 test("center click yields max score", () => {
   const fakeSVG = {

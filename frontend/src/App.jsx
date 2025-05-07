@@ -1,57 +1,34 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import TargetFace from "./components/TargetFace";
+// frontend/src/App.jsx
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import ProLayout, { PageContainer } from "@ant-design/pro-layout";
+import { DashboardOutlined, AimOutlined } from "@ant-design/icons";
 
-function App() {
-  // 1️⃣ Create a state variable "message", initially empty string
-  // eslint-disable-next-line no-unused-vars
-  const [message, setMessage] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [quivers, setQuivers] = useState([]);
-  const [shots, setShots] = useState([]);
-  const handleScore = (shot) => setShots((prev) => [...prev, shot]);
+import DashboardPage   from "./components/DashboardPage";
+import TargetPractice  from "./components/TargetPractice";
 
-  useEffect(() => {
-    axios
-      .get("/api/quivers")
-      .then((response) => {
-        setQuivers(response.data);
-      })
-      .catch((error) => {
-        console.error("Error loading quivers:", error);
-      });
-  }, []);
+export default function App() {
+  const menuData = [
+    { path: "/",       name: "Dashboard",       icon: <DashboardOutlined /> },
+    { path: "/target", name: "Target Practice", icon: <AimOutlined /> },
+  ];
 
-  // 2️⃣ After first render, fetch from our Flask API
-  useEffect(() => {
-    axios
-      .get("/api/hello") // thanks to the proxy
-      .then((res) => {
-        // 2a. On success, store res.data.message in our state
-        setMessage(res.data.message);
-      })
-      .catch((err) => {
-        // 2b. On error, log it so we can debug
-        console.error("API call error:", err);
-      });
-  }, []); // [] means “run only once”
-
-  // 3️⃣ Render the UI
   return (
-    <div style={{ width: "80vw", height: "80vh", margin: "auto" }}>
-      <h1>Archery Target</h1>
-      <TargetFace onScore={handleScore} shots={shots} />{" "}
-      {/* using the export */}
-      <h2>Scores</h2>
-      <ul>
-        {shots.map(({ x, y, score }, i) => (
-          <li key={i}>
-            Arrow {i + 1}: score {score} at ({x.toFixed(1)}, {y.toFixed(1)})
-          </li>
-        ))}
-      </ul>
-    </div>
+    <BrowserRouter>
+      <ProLayout
+        title="QuiverStats"
+        logo="/vite.svg"
+        menuDataRender={() => menuData}
+        menuItemRender={(item, dom) => <Link to={item.path}>{dom}</Link>}
+        fixedHeader
+      >
+        <PageContainer>
+          <Routes>
+            <Route path="/"       element={<DashboardPage />} />
+            <Route path="/target" element={<TargetPractice />} />
+          </Routes>
+        </PageContainer>
+      </ProLayout>
+    </BrowserRouter>
   );
 }
-
-export default App;
