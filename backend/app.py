@@ -8,7 +8,6 @@ database initialization and configuration.
 import os  # 1. access environment vars
 from dotenv import load_dotenv  # 2. read .env file
 from flask import Flask, jsonify, request, abort  # 3. core Flask imports
-from flask_sqlalchemy import SQLAlchemy  # 4. ORM
 from flask_cors import CORS  # 5. CORS support
 from flask_migrate import Migrate
 from backend.extensions import db  # Import db from extensions
@@ -77,7 +76,7 @@ def get_quiver(quiver_id):
     q = db.session.get(Quiver, quiver_id)
     if q is None:
         abort(404)
-    
+
     return jsonify(
         {
             "id": q.id,
