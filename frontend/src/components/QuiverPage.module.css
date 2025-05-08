@@ -1,0 +1,27 @@
+.quiverPage {
+  padding: 16px;
+}
+
+.scrollContainer {
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+/* Add styling for scrollbars if needed */
+.scrollContainer::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
