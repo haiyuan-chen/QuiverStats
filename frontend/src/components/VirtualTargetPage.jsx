@@ -3,6 +3,7 @@ import { Card, Button, Typography } from "antd";
 import { useShots }                from "../hooks/useShots";
 import TargetFace                  from "./TargetFace";
 import styles                      from "./TargetPractice.module.css";
+import { GiArcheryTarget } from "react-icons/gi";
 
 const { Paragraph } = Typography;
 

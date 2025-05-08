@@ -3,16 +3,16 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ProLayout, { PageContainer } from "@ant-design/pro-layout";
 import { Layout } from "antd";
 import { DashboardOutlined, AimOutlined } from "@ant-design/icons";
-
 import DashboardPage from "./components/DashboardPage";
-import TargetPractice from "./components/TargetPractice";
+import TargetPractice from "./components/VirtualTargetPage";
+import { GiArcheryTarget } from "react-icons/gi";
 
 const { Header, Content, Footer } = Layout;
 
 export default function App() {
   const menuData = [
-    { path: "/", name: "Dashboard", icon: <DashboardOutlined /> },
-    { path: "/target", name: "Target Practice", icon: <AimOutlined /> },
+    { path: "/", name: "Overview", icon: <DashboardOutlined /> },
+    { path: "/target", name: "Virtual Target", icon: <GiArcheryTarget /> },
   ];
 
   return (
@@ -28,6 +28,7 @@ export default function App() {
             style={{ height: "100%" }}
             contentWidth="Fluid"
             fixedHeader={false}
+            title = "QuiverStats"
             logo={false}
             menuDataRender={() => menuData}
             menuItemRender={(item, dom) => <Link to={item.path}>{dom}</Link>}

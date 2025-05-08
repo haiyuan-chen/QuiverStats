@@ -1,11 +1,20 @@
-// components/ShotMark.jsx
+// src/components/ShotMarker.jsx
 import PropTypes from "prop-types";
+import { TbTargetArrow } from "react-icons/tb";
 
-export function ShotMarker({ x, y, arm }) {
+
+/**
+ * Renders a shot marker icon at the given (x,y) coordinates.
+ * iconSize controls both width and height of the icon.
+ */
+export function ShotMarker({ x, y, iconSize = 4 }) {
+  const offset = iconSize / 2;
   return (
-    <g stroke="darkred" strokeWidth={0.3}>
-      <line x1={x - arm} y1={y - arm} x2={x + arm} y2={y + arm} />
-      <line x1={x - arm} y1={y + arm} x2={x + arm} y2={y - arm} />
+    <g
+      transform={`translate(${x - offset}, ${y - offset})`}
+      style={{ pointerEvents: "none" }}
+    >
+      <TbTargetArrow size={iconSize} />
     </g>
   );
 }
@@ -13,5 +22,5 @@ export function ShotMarker({ x, y, arm }) {
 ShotMarker.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  arm: PropTypes.number.isRequired,
+  iconSize: PropTypes.number,
 };
