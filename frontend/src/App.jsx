@@ -6,13 +6,18 @@ import { DashboardOutlined, AimOutlined } from "@ant-design/icons";
 import DashboardPage from "./components/DashboardPage";
 import TargetPractice from "./components/VirtualTargetPage";
 import { GiArcheryTarget } from "react-icons/gi";
+import { GiQuiver } from "react-icons/gi";
+import { GiArcher } from "react-icons/gi";
+
+
 
 const { Header, Content, Footer } = Layout;
 
 export default function App() {
   const menuData = [
-    { path: "/", name: "Overview", icon: <DashboardOutlined /> },
+    { path: "/", name: "Overview", icon: <GiArcher /> },
     { path: "/target", name: "Virtual Target", icon: <GiArcheryTarget /> },
+    { path: "/quivers", name: "My Quivers", icon: <GiQuiver /> },
   ];
 
   return (
