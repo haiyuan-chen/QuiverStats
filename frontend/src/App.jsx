@@ -1,34 +1,53 @@
-// frontend/src/App.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ProLayout, { PageContainer } from "@ant-design/pro-layout";
+import { Layout } from "antd";
 import { DashboardOutlined, AimOutlined } from "@ant-design/icons";
 
-import DashboardPage   from "./components/DashboardPage";
-import TargetPractice  from "./components/TargetPractice";
+import DashboardPage from "./components/DashboardPage";
+import TargetPractice from "./components/TargetPractice";
+
+const { Header, Content, Footer } = Layout;
 
 export default function App() {
   const menuData = [
-    { path: "/",       name: "Dashboard",       icon: <DashboardOutlined /> },
+    { path: "/", name: "Dashboard", icon: <DashboardOutlined /> },
     { path: "/target", name: "Target Practice", icon: <AimOutlined /> },
   ];
 
   return (
     <BrowserRouter>
-      <ProLayout
-        title="QuiverStats"
-        logo="/vite.svg"
-        menuDataRender={() => menuData}
-        menuItemRender={(item, dom) => <Link to={item.path}>{dom}</Link>}
-        fixedHeader
-      >
-        <PageContainer>
-          <Routes>
-            <Route path="/"       element={<DashboardPage />} />
-            <Route path="/target" element={<TargetPractice />} />
-          </Routes>
-        </PageContainer>
-      </ProLayout>
+      <Layout style={{ height: "100vh" }}>
+        <Header style={{ padding: 0 }}>
+          {/* you can put your logo/nav here, or leave blank if ProLayout handles it */}
+        </Header>
+
+        <Content style={{ padding: 0, height: "calc(100% - 64px)" }}>
+          {/* ProLayout gives you sidebar + header; we still wrap in it */}
+          <ProLayout
+            style={{ height: "100%" }}
+            contentWidth="Fluid"
+            fixedHeader={false}
+            logo={false}
+            menuDataRender={() => menuData}
+            menuItemRender={(item, dom) => <Link to={item.path}>{dom}</Link>}
+          >
+            <PageContainer
+              style={{ height: "100%", padding: 0 }}
+              contentStyle={{ height: "100%" }}
+            >
+              <Routes>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/target" element={<TargetPractice />} />
+              </Routes>
+            </PageContainer>
+          </ProLayout>
+        </Content>
+
+        <Footer style={{ textAlign: "center" }}>
+          {/* optional footer; height here counts against calc above */}
+        </Footer>
+      </Layout>
     </BrowserRouter>
   );
 }
