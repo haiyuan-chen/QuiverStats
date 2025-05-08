@@ -16,6 +16,7 @@ export const deleteArrow = (arrowId) => axios.delete(`${API_BASE_URL}/arrows/${a
 
 // Score endpoints
 export const fetchScoresForArrow = (arrowId) => axios.get(`${API_BASE_URL}/arrows/${arrowId}/scores`);
+// Ensure scoreData matches the new structure: { value, x, y, sequence }
 export const addScoreToArrow = (arrowId, scoreData) => axios.post(`${API_BASE_URL}/arrows/${arrowId}/scores`, scoreData);
 // Assuming score IDs are unique and can be deleted directly.
 // If scores are sub-resources of arrows for deletion as well, adjust the endpoint.

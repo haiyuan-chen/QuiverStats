@@ -1,5 +1,5 @@
 // src/components/QuiverPage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Added useEffect, useRef
 import {
   Button,
   Modal,
@@ -21,6 +21,7 @@ export default function QuiverPage() {
     useQuivers();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const scrollContainerRef = useRef(null); // Ref for the scrollable container
 
   const handleCreateQuiver = async (values) => {
     try {
@@ -45,6 +46,23 @@ export default function QuiverPage() {
       // Error message already handled by useQuivers hook
     }
   };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleWheelScroll = (event) => {
+      if (event.deltaY === 0) return; // Ignore horizontal scroll events from trackpads
+      // event.preventDefault(); // Uncomment if you want to prevent vertical scroll on the page too
+      container.scrollLeft += event.deltaY + event.deltaX; // event.deltaX for trackpads that do horizontal
+    };
+
+    container.addEventListener("wheel", handleWheelScroll, { passive: true }); // passive:true if not preventing default
+
+    return () => {
+      container.removeEventListener("wheel", handleWheelScroll);
+    };
+  }, []);
 
   if (loading && quivers.length === 0) {
     return (
@@ -75,6 +93,7 @@ export default function QuiverPage() {
       </Title>
 
       <Flex
+        ref={scrollContainerRef} // Assign ref here
         wrap="nowrap" // Ensures horizontal scrolling, not wrapping
         style={{
           overflowX: "auto", // Allows horizontal scrolling
