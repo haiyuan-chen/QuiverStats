@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Button, Typography, message, Row, Col, List } from "antd";
-import { useActiveArrow as useGlobalActiveArrow } from "../contexts/ActiveArrowContext"; // Renamed for clarity
+import { useActiveArrow as useGlobalActiveArrow } from "../contexts/ActiveArrowContext";
 import { useQuivers } from "../hooks/useQuivers";
 import { useArrows } from "../hooks/useArrows";
 import { addScoreToArrow as apiAddScoreToArrow } from "../services/quiverApiService";
@@ -50,6 +50,7 @@ export default function VirtualTargetPage() {
     });
   };
 
+  // Purpose: Called when the user clicks a "Confirm Scores" button for a specific quiver. It sends all session scores for that quiver to the backend.
   const handleConfirmScoresForQuiver = async (quiverIdToConfirm) => {
     if (!quiverIdToConfirm || !sessionScores[quiverIdToConfirm]) {
       message.info("No session scores to confirm for this quiver.");
@@ -66,7 +67,7 @@ export default function VirtualTargetPage() {
       if (arrowScores && arrowScores.length > 0) {
         try {
           for (const score of arrowScores) {
-            await apiAddScoreToArrow(arrowId, score);
+            await apiAddScoreToArrow(arrowId, score);  // Possible congestion spot
           }
           successCount += arrowScores.length;
         } catch (err) {
@@ -216,6 +217,7 @@ export default function VirtualTargetPage() {
     );
   };
 
+  // Effect to auto-select the first arrow when targetPageActiveQuiverId changes and its arrows load
   useEffect(() => {
     if (targetPageActiveQuiverId && arrowsForSelectedQuiver.length > 0) {
       const currentArrowIsValid = arrowsForSelectedQuiver.some(arrow => arrow.id === targetPageActiveArrowId);

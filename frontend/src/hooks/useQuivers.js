@@ -34,15 +34,17 @@ export const useQuivers = () => {
   const addQuiver = async (quiverData) => {
     setLoading(true);
     try {
-      const { data: newQuiver } = await apiCreateQuiver(quiverData);
-      setQuivers((prevQuivers) => [...prevQuivers, newQuiver]);
+
+      const { data: newQuiver } = await apiCreateQuiver(quiverData); 
+      setQuivers((prevQuivers) => [...prevQuivers, newQuiver]); 
+
       message.success('Quiver created successfully.');
       return newQuiver;
     } catch (err) {
       message.error('Failed to create quiver.');
       throw err;
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 

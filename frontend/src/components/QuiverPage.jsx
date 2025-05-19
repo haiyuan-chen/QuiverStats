@@ -17,21 +17,21 @@ import QuiverCard from "./QuiverCard";
 const { Title } = Typography;
 
 export default function QuiverPage() {
-  const { quivers, loading, addQuiver, editQuiver, removeQuiver } =
-    useQuivers();
+  const { quivers, loading, addQuiver, editQuiver, removeQuiver } = useQuivers(); // 1. Get addQuiver from the hook
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
+  const [form] = Form.useForm(); // Ant Design form instance
   const scrollContainerRef = useRef(null); // Ref for the scrollable container
 
-  const handleCreateQuiver = async (values) => {
+  const handleCreateQuiver = async (values) => { // 3. Called on form submission
     try {
-      await addQuiver(values);
-      setIsModalVisible(false);
-      form.resetFields();
+      await addQuiver(values); // 4. Call the addQuiver function from the hook
+      setIsModalVisible(false); // Close modal on success
+      form.resetFields();     // Reset form fields
     } catch {
-      // Error message already handled by useQuivers hook
+      // Error message already handled by useQuivers hook (as per its design)
     }
   };
+
   const handleEditQuiver = async (quiverId, values) => {
     try {
       await editQuiver(quiverId, values);
@@ -154,16 +154,14 @@ export default function QuiverPage() {
           setIsModalVisible(false);
           form.resetFields();
         }}
-        onOk={() => form.submit()}
+        onOk={() => form.submit()} // Triggers form's onFinish
         confirmLoading={loading}
       >
-        <Form form={form} layout="vertical" onFinish={handleCreateQuiver}>
+        <Form form={form} layout="vertical" onFinish={handleCreateQuiver}> // 2. Form submission calls handleCreateQuiver
           <Form.Item
             name="name"
             label="Quiver Name"
-            rules={[
-              { required: true, message: "Please input the quiver name!" },
-            ]}
+            rules={[{ required: true, message: "Please input the quiver name!" }]}
           >
             <Input placeholder="e.g., Outdoor Practice" />
           </Form.Item>
